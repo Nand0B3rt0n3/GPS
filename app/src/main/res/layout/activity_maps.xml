@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent"
+            tools:context=".MapsActivity"
+            />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:orientation="horizontal"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btMapType"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_btviewtype"
+            android:contentDescription="@string/bottom_sheet_behavior"
+            map:flow_horizontalAlign="end"
+            android:background="#0000"
+            android:layout_gravity="end"
+            android:onClick="ChangeType"
+            tools:ignore="MissingConstraints"
+            />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/myLocationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+                android:layout_marginVertical="20dp"
+                android:layout_marginLeft="250dp"
+            android:background="@drawable/mylocation"
+            android:contentDescription="@string/mylocationbutton"
+
+            tools:ignore="MissingConstraints"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+    <LinearLayout
+        android:id="@+id/naAlertBorder"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/et_circle"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/naInfo"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="2.5dp"
+            android:background="@drawable/et_circle_in"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:text="@string/km_h"
+                android:gravity="center"
+                android:textColor="#4CAF50"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="50sp"
+                    />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btAlert"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#0000"
+        android:contentDescription="@string/button"
+        android:src="@drawable/ic_btnewalert"
+        android:visibility="visible"
+        android:layout_marginLeft="180dp"
+        android:foregroundGravity="bottom"
+        android:layout_gravity="end"
+        />
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

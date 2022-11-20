@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NewAlertRadarBot</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="new_alert_button">new alert button</string>
+    <string name="button">button</string>
+    <string name="mylocationbutton">mylocationbutton</string>
+    <string name="km_h">Km/h</string>
+    <string name="_40">40</string>
+</resources>
