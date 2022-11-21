@@ -3,11 +3,13 @@ package com.example.newalertradarbot
 
 import android.Manifest
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.newalertradarbot.databinding.ActivityMapsBinding
@@ -22,6 +24,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private lateinit var newAlertButton: AppCompatImageButton
 
     companion object{
         const val REQUEST_CODE_LOCATION = 0
@@ -33,14 +36,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        
+        newAlertButton  = findViewById(R.id.btAlert)
+        newAlertButton.setOnClickListener{
+            val intent = Intent(this,NewAlert::class.java)
+            intent.putExtra("OptionName","newAlert")
+            startActivity(intent)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         val mockLocate = LatLng(40.23072225476209, -3.989952850355164)
         mMap.animateCamera( newLatLngZoom(mockLocate, 20f),3000,null
-       )
+        )
     }
     fun ChangeType(view: View) {
         if(mMap.mapType == GoogleMap.MAP_TYPE_NORMAL){
@@ -79,11 +87,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun requestLocationPermission() {
-       if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
             Toast.makeText(this, "Ve a ajustes y acepta los permisos", Toast.LENGTH_SHORT).show()
-       } else {
+        } else {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE_LOCATION)
-       }
+        }
     }
 
 }
