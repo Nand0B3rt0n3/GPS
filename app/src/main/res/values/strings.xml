@@ -6,4 +6,13 @@
     <string name="mylocationbutton">mylocationbutton</string>
     <string name="km_h">Km/h</string>
     <string name="_40">40</string>
+    <string name="enviar_alerta">Enviar alerta</string>
+    <string name="nueva_alerta">Nueva alerta</string>
+    <string name="describelo_de_forma_concisa">Describelo de forma concisa</string>
+    <string name="_250_max">250 max</string>
+    <string name="ubicaci_n">Ubicación</string>
+    <string name="c_de_la_rivera_12">C. de la Rivera, 12</string>
+    <string name="ubicar_en_el_mapa">Ubicar en el mapa</string>
+    <string name="todo">TODO</string>
+    <string name="enviar_alerta2">Enviar Alerta</string>
 </resources>
