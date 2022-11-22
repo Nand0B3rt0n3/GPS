@@ -26,7 +26,7 @@ class NewAlert : AppCompatActivity() {
         buttonSendAlert.setOnClickListener{
             val intent = Intent(this,MapsActivity::class.java)
             intent.putExtra("OptionName","MapsActivity")
-            Toast.makeText(this, "Alerta enviada", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Alerta enviada con exito", Toast.LENGTH_LONG).show()
             startActivity(intent)
         }
     }
