@@ -61,7 +61,7 @@
                 android:layout_marginStart="30dp"
                 android:background="@drawable/mylocation"
                 android:contentDescription="@string/mylocationbutton"
-                tools:ignore="MissingConstraints"
+                android:visibility="gone"
                 />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

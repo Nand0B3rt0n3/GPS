@@ -52,6 +52,7 @@ class NewAlertLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.animateCamera( newLatLngZoom(mockLocate, 20f),3000,null
         )
     }
+
     fun ChangeType(view: View) {
         if(mMap.mapType == GoogleMap.MAP_TYPE_NORMAL){
             mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
