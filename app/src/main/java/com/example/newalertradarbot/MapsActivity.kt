@@ -6,6 +6,7 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,12 +17,14 @@ import androidx.core.content.ContextCompat
 import com.example.newalertradarbot.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener
+import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMyLocationButtonClickListener, OnMyLocationClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -34,10 +37,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         enableLocation()
+        mMap.setOnMyLocationButtonClickListener(this)
+        mMap.setOnMyLocationClickListener(this)
         val mockLocate = LatLng(40.23072225476209, -3.989952850355164)
         mMap.animateCamera( newLatLngZoom(mockLocate, 20f),3000,null
         )
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapsBinding.inflate(layoutInflater)
@@ -64,6 +70,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         }
     }
+
     private fun isLocationPermissionGranted() = ContextCompat.checkSelfPermission(
         this,
         android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -122,5 +129,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             else -> {}
         }
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        Toast.makeText(this, "Mostrando tu posición", Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+    override fun onMyLocationClick(p0: Location) {
+        Toast.makeText(this,"Estas en ${p0.latitude}, ${p0.longitude}",Toast.LENGTH_SHORT).show()
     }
 }

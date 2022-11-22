@@ -3,8 +3,10 @@ package com.example.newalertradarbot
 
 import android.Manifest
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -20,7 +22,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 
 
-class NewAlertLocationActivity : AppCompatActivity(), OnMapReadyCallback {
+class NewAlertLocationActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnMyLocationClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -30,6 +33,15 @@ class NewAlertLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         const val REQUEST_CODE_LOCATION = 0
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        enableLocation()
+        mMap.setOnMyLocationButtonClickListener(this)
+        mMap.setOnMyLocationClickListener(this)
+        val mockLocate = LatLng(40.23072225476209, -3.989952850355164)
+        mMap.animateCamera( newLatLngZoom(mockLocate, 20f),3000,null
+        )
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapsBinding.inflate(layoutInflater)
@@ -46,13 +58,6 @@ class NewAlertLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        val mockLocate = LatLng(40.23072225476209, -3.989952850355164)
-        mMap.animateCamera( newLatLngZoom(mockLocate, 20f),3000,null
-        )
-    }
-
     fun ChangeType(view: View) {
         if(mMap.mapType == GoogleMap.MAP_TYPE_NORMAL){
             mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
@@ -64,6 +69,7 @@ class NewAlertLocationActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         }
     }
+
     private fun isLocationPermissionGranted() = ContextCompat.checkSelfPermission(
         this,
         android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -90,11 +96,46 @@ class NewAlertLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun requestLocationPermission() {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(
+                this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        )
+        {
             Toast.makeText(this, "Ve a ajustes y acepta los permisos", Toast.LENGTH_SHORT).show()
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE_LOCATION)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_CODE_LOCATION
+            )
         }
     }
 
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            REQUEST_CODE_LOCATION -> if(
+                grantResults.isNotEmpty()
+                && grantResults[0]==PackageManager.PERMISSION_GRANTED
+            ){
+                mMap.isMyLocationEnabled = true
+            }else{
+                Toast.makeText(this, "Para activar la localizacion GPS, ve a ajustes y acepta los permisos", Toast.LENGTH_LONG).show()
+            }
+            else -> {}
+        }
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        Toast.makeText(this, "Mostrando tu posición", Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+    override fun onMyLocationClick(p0: Location) {
+        Toast.makeText(this,"Estas en ${p0.latitude}, ${p0.longitude}",Toast.LENGTH_SHORT).show()
+    }
 }
